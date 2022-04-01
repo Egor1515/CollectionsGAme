@@ -36,8 +36,8 @@ class GameTest {
     void shouldAddIfRegistered() throws NotRegisteredException {
 
 
-        Player[] expected = {player1};
-        Player[] actual = game.register(player1, true).toArray(new Player[0]);
+        Player[] expected = {player2};
+        Player[] actual = game.register(player2, true).toArray(new Player[0]);
 
         assertArrayEquals(expected, actual);
 
