@@ -1,6 +1,6 @@
 package ru.netology.domain;
 
-public class  Player {
+public class  Player implements Comparable {
     private int id;
     private String name;
     private int strength;
@@ -45,5 +45,11 @@ public class  Player {
                 ", name='" + name + '\'' +
                 ", strength=" + strength +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Player p = (Player) o;
+        return getStrength()-p.getStrength();
     }
 }

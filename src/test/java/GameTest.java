@@ -2,23 +2,21 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Player;
 
-import java.util.Collection;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
-    Game game = new Game();
-    private final Player player1 = new Player(1, "Egor", 100);
-    private final Player player2 = new Player(2, "Egor", 200);
-    private final Player player3 = new Player(3, "Egor", 300);
-    private final Player player4 = new Player(4, "Egor", 400);
-    private final Player player5 = new Player(5, "Egor", 500);
+    public Game game = new Game();
+    private final Player first = new Player(1, "Egor", 100);
+    private final Player second = new Player(2, "Egor", 200);
+    private final Player third = new Player(3, "Egor", 300);
+    private final Player forth = new Player(4, "Egor", 400);
+    private final Player fifth = new Player(5, "Egor", 500);
 
     @Test
     void shouldCalc() {
 
-        game.save(player2);
-        Player[] expected = {player2};
+        game.save(second);
+        Player[] expected = {second};
         Player[] actual = game.findAll().toArray(new Player[0]);
 
 
@@ -26,61 +24,61 @@ class GameTest {
     }
 
     @Test
-    void shouldThrow() throws NotRegisteredException {
+    void shouldThrow() {
 
-
-        Assertions.assertThrows(NotRegisteredException.class, () -> game.register(player1, false));
+        Assertions.assertThrows(NotRegisteredException.class, () -> game.register(first, false));
     }
 
     @Test
     void shouldAddIfRegistered() throws NotRegisteredException {
 
 
-        Player[] expected = {player2};
-        Player[] actual = game.register(player2, true).toArray(new Player[0]);
+        boolean actual = game.register(second, true);
 
-        assertArrayEquals(expected, actual);
+        assertTrue( actual);
 
 
     }
 
     @Test
     void shouldFindBy() {
-        assertTrue(game.matchesInt(player1, "Egor"));
-
+        assertTrue(game.matchesInt(first, "Egor"));
 
     }
 
     @Test
-    void shouldReturn2() {
-        game.save(player1);
-        game.save(player2);
+    void shouldReturn1() throws NotRegisteredException {
+        game.save(third);
+        game.save(first);
 
-        int actual =game.round(player1,player2);
+        game.register(first,true);
+        game.register(third,true);
+
+        int actual =game.round("first","third");
 
         assertEquals(2,actual);
 
 
     }
     @Test
-    void shouldReturn1() {
-        game.save(player1);
-        game.save(player2);
+    void shouldReturnThrow() throws NotRegisteredException {
+        game.save(third);
+        game.save(first);
 
-        int actual =game.round(player2,player1);
+        game.register(first,true);
+        game.register(third,false);
 
-        assertEquals(1,actual);
+        Assertions.assertThrows(NotRegisteredException.class,() -> game.round("third","first"));
 
 
     }
     @Test
-    void shouldReturn0() {
-        game.save(player1);
+    void shouldReturn0() throws NotRegisteredException {
+        game.save(fifth);
+        game.save(second);
 
-
-        int actual =game.round(player1,player1);
-
-        assertEquals(0,actual);
+        int actual =game.round("second","fifth");
+        assertEquals(1,actual);
 
     }
 
