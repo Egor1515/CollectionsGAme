@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
     public Game game = new Game();
-    private final Player first = new Player(1, "Egor", 100);
-    private final Player second = new Player(2, "Egor", 200);
-    private final Player third = new Player(3, "Egor", 300);
-    private final Player forth = new Player(4, "Egor", 400);
-    private final Player fifth = new Player(5, "Egor", 500);
+    private final Player first = new Player(1, "first", 100);
+    private final Player second = new Player(2, "second", 200);
+    private final Player third = new Player(3, "third", 300);
+    private final Player forth = new Player(4, "forth", 400);
+    private final Player fifth = new Player(5, "fifth", 500);
 
     @Test
     void shouldCalc() {
@@ -26,19 +26,10 @@ class GameTest {
     @Test
     void shouldThrow() {
 
-        Assertions.assertThrows(NotRegisteredException.class, () -> game.register(first, false));
+
+        Assertions.assertThrows(NotRegisteredException.class, () -> game.round("first", "second"));
     }
 
-    @Test
-    void shouldAddIfRegistered() throws NotRegisteredException {
-
-
-        boolean actual = game.register(second, true);
-
-        assertTrue( actual);
-
-
-    }
 
     @Test
     void shouldFindBy() {
@@ -49,37 +40,46 @@ class GameTest {
     @Test
     void shouldReturn1() throws NotRegisteredException {
         game.save(third);
+        game.save(second);
         game.save(first);
 
-        game.register(first,true);
-        game.register(third,true);
 
-        int actual =game.round("first","third");
+        int actual = game.round("first", "third");
 
-        assertEquals(2,actual);
+        assertEquals(2, actual);
 
 
     }
+
     @Test
     void shouldReturnThrow() throws NotRegisteredException {
         game.save(third);
         game.save(first);
 
-        game.register(first,true);
-        game.register(third,false);
 
-        Assertions.assertThrows(NotRegisteredException.class,() -> game.round("third","first"));
+        Assertions.assertThrows(NotRegisteredException.class, () -> game.round("third", "first"));
 
 
     }
+
     @Test
     void shouldReturn0() throws NotRegisteredException {
-        game.save(fifth);
         game.save(second);
+        game.save(fifth);
 
-        int actual =game.round("second","fifth");
-        assertEquals(1,actual);
 
+        int actual = game.round("second", "fifth");
+        assertEquals(1, actual);
+    }
+
+    @Test
+    void shouldReturn2() throws NotRegisteredException {
+        game.save(second);
+        game.save(fifth);
+
+
+        int actual = game.round("fifth", "second");
+        assertEquals(2, actual);
     }
 
 }

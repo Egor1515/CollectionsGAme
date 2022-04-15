@@ -7,14 +7,10 @@ public class Game extends Player {
     private final Collection<Player> players = new ArrayList<>();
 
 
-    public boolean register(Player player, boolean registered) throws NotRegisteredException {
+    public void register(Player player) {
 
-        if (registered) {
-            players.add(player);
-            return true;
+        players.add(player);
 
-        }
-        throw new NotRegisteredException("Не зарегистрирован");
 
     }
 
@@ -29,19 +25,24 @@ public class Game extends Player {
 
     public int round(String player1, String player2) throws NotRegisteredException {
 
-        for (Player player : findAll()) {
-            if (register(player, true)) {
-                int result = player1.compareTo(player2);
-                if (result > 0) {
-                    return 1;
+        for (Player firstPlayer : players) {
+            if (firstPlayer.getName().equals(player1)) {
+                for (Player secondPlayer : players)
+                if (secondPlayer.getName().equals(player2)) {
+                    int result = player1.compareTo(player2);
+                    if (result > 0) {
+                        return 1;
+                    }
+                    if (result < 0) {
+                        return 2;
+                    }
+                    if (result == 0) {
+                        return 0;
+                    }
                 }
-                if (result < 0) {
-                    return 2;
-                }
-
             }
         }
-        return 0;
+        throw new NotRegisteredException("Не зарегистрирован");
     }
 
     public void save(Player player) {
