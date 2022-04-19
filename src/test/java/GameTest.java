@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
     public Game game = new Game();
-    private final Player first = new Player(1, "first", 100);
+    private final Player first = new Player(1, "Egor", 100);
     private final Player second = new Player(2, "second", 200);
     private final Player third = new Player(3, "third", 300);
     private final Player forth = new Player(4, "forth", 400);
@@ -27,12 +27,14 @@ class GameTest {
     void shouldThrow() {
 
 
-        Assertions.assertThrows(NotRegisteredException.class, () -> game.round("first", "second"));
+
+
+        Assertions.assertThrows(NotRegisteredException.class, () -> game.round("Egor", "second"));
     }
 
 
     @Test
-    void shouldFindBy() {
+    void shouldFindByName() {
         assertTrue(game.matchesInt(first, "Egor"));
 
     }
@@ -44,7 +46,7 @@ class GameTest {
         game.save(first);
 
 
-        int actual = game.round("first", "third");
+        int actual = game.round("Egor", "third");
 
         assertEquals(2, actual);
 
