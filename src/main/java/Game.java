@@ -6,12 +6,8 @@ import java.util.Collection;
 public class Game extends Player {
     private final Collection<Player> players = new ArrayList<>();
 
-
     public void register(Player player) {
-
         players.add(player);
-
-
     }
 
     public boolean matchesInt(Player player, String name) {
@@ -28,18 +24,18 @@ public class Game extends Player {
         for (Player firstPlayer : players) {
             if (firstPlayer.getName().equals(player1)) {
                 for (Player secondPlayer : players)
-                if (secondPlayer.getName().equals(player2)) {
-                    int result = player1.compareTo(player2);
-                    if (result > 0) {
-                        return 1;
+                    if (secondPlayer.getName().equals(player2)) {
+                        int result = player1.compareTo(player2);
+                        if (result > 0) {
+                            return 1;
+                        }
+                        if (result < 0) {
+                            return 2;
+                        }
+                        if (result == 0) {
+                            return 0;
+                        }
                     }
-                    if (result < 0) {
-                        return 2;
-                    }
-                    if (result == 0) {
-                        return 0;
-                    }
-                }
             }
         }
         throw new NotRegisteredException("Не зарегистрирован");
@@ -48,7 +44,6 @@ public class Game extends Player {
     public void save(Player player) {
         players.add(player);
     }
-
 
 }
 

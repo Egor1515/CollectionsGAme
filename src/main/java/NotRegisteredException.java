@@ -1,6 +1,5 @@
-public class NotRegisteredException extends Exception{
-    public NotRegisteredException(String message){
+public class NotRegisteredException extends Exception {
+    public NotRegisteredException(String message) {
         super(message);
     }
-
 }
